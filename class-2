@@ -40,3 +40,46 @@ cost=@(x) 25*(sqrt(10^2+x.^2))+10*(20-x);
 y=cost(x);
 plot(x,y)
 
+%%
+cost=@(x) 25*sqrt(100+x.^2)+10*(20-x);
+x=linspace(0,20);
+y=cost(x);
+plot(x,y)
+x0=10;
+[xmin,fval]=fminsearch(cost,x0);
+%%
+hold on;
+plot(xmin,fval,'ro')
+hold off;
+%%
+function  y=cost2(x)
+    y=25*sqrt(100+x.^2)+10*(20-x);
+end
+[xmin2,fval2]=fminsearch(@cost2,x0);
+%%
+t = 0:pi/50:10*pi;
+st = sin(t);
+ct = cos(t);
+figure; plot3(st,ct,t)
+%%
+f = @(x,y) x.*exp(-x.^2-y.^2);
+figure; fmesh(f,[-2,2,-1,1])
+%%
+f = @(x,y) x.*exp(-x.^2-y.^2);
+figure; fcontour(f,[-2,2,-1,1])
+%%
+x=linspace(-2,2);
+y=linspace(-1,1);
+[xx,yy] = meshgrid(x,y);
+zz = xx.*exp(-xx.^2-yy.^2);
+figure; mesh(xx,yy,zz)
+contour(xx,yy,zz,ShowText="on");
+%%
+x=linspace(5,15);
+y=linspace(5,15);
+[xx,yy] = meshgrid(x,y);
+zz=2*xx.*yy+2000./yy+2000./xx;
+figure; mesh(xx,yy,zz);
+%%
+fun=@(x)2*x(1).*x(2)+2000./x(1)+2000./x(2);
+[xmin,fval]=fminsearch(fun,[8,8]);
