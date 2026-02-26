@@ -1,0 +1,25 @@
+function alpha=backtrack(fun,gfun,p,x,alpha,c ,rho)
+    while fun(x+alpha*p)>fun(x)+alpha*c*dot(gfun(x),p)
+        alpha=rho*alpha;
+    end
+end
+
+
+
+%%
+function x0=gradmeth(fun,gfun,x0,tol)
+while norm(gfun(x0))>tol
+    p=-gfun(x0);
+    alpha=backtrack(fun,gfun,p,x0,0.4,1e-4,0.5)
+    x0=x0+alpha*p;
+end
+end
+
+%%
+example=@(x,y)x.^3+y.^3-3*x-3*y;
+%fcountour
+objf=@(x)example(x(1),x(2));
+gobjf=@(x)[3*x(1)^2-3;3*x(2)^2-3];
+x0=[0;-0.9];
+xmin=gradmeth(objf,gobjf,x0,1e-3);
+disp(xmin);
